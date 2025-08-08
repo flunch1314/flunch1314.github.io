@@ -490,12 +490,14 @@ body {
     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
     gap: 2rem;
     margin-bottom: 2rem;
+    align-items: start;
 }
 
 .footer-section h3 {
     font-size: 1.25rem;
     margin-bottom: 1rem;
     color: #f8fafc;
+    min-height: 1.25rem; /* ensure consistent header alignment */
 }
 
 .footer-section p {
@@ -506,10 +508,16 @@ body {
 
 .footer-section ul {
     list-style: none;
+    padding-left: 0; /* normalize indentation */
 }
 
 .footer-section ul li {
     margin-bottom: 0.5rem;
+}
+
+/* Normalize spacing inside footer sections */
+.footer-section > *:not(:last-child) {
+    margin-bottom: 0.75rem;
 }
 
 .footer-section ul li a {
@@ -556,9 +564,8 @@ body {
 /* ClustrMaps embedded in footer column (non-floating) */
 .clustrmaps-embed {
     width: 100%;
-    max-width: 320px;
-    margin-left: auto;
-    margin-right: 0;
+    max-width: 250px;
+    margin: 0;
 }
 
 .clustrmaps-embed a,
