@@ -300,3 +300,37 @@ document.querySelectorAll('.btn').forEach(button => {
 });
 
 console.log('Premium Auto Sales website loaded successfully!'); 
+
+// Page view counter using CountAPI (free, no auth)
+(function() {
+    const NAMESPACE = 'flunch1314.github.io';
+    const KEY = 'premium-auto-sales-home';
+    const VIEW_EL = document.getElementById('view-count');
+    if (!VIEW_EL) return;
+
+    // Limit increments to once per day per browser
+    const STORAGE_KEY = 'viewCounter:lastIncrement:' + KEY;
+    const last = localStorage.getItem(STORAGE_KEY);
+    const today = new Date().toISOString().slice(0, 10);
+
+    function setCount(value) {
+        VIEW_EL.textContent = new Intl.NumberFormat().format(value);
+    }
+
+    // Always fetch current value to display (idempotent)
+    fetch(`https://api.countapi.xyz/get/${encodeURIComponent(NAMESPACE)}/${encodeURIComponent(KEY)}`)
+        .then(r => r.ok ? r.json() : Promise.reject(r))
+        .then(data => setCount(data.value))
+        .catch(() => {/* ignore */});
+
+    // Increment if not already done today
+    if (last !== today) {
+        fetch(`https://api.countapi.xyz/hit/${encodeURIComponent(NAMESPACE)}/${encodeURIComponent(KEY)}`)
+            .then(r => r.ok ? r.json() : Promise.reject(r))
+            .then(data => {
+                setCount(data.value);
+                localStorage.setItem(STORAGE_KEY, today);
+            })
+            .catch(() => {/* ignore */});
+    }
+})();
