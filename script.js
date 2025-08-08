@@ -1,5 +1,23 @@
-// List of image files to include in the gallery (fallback if manifest fetch fails).
-// Using only files that start with "kobe" (plus the base kobe.jpg).
+// Featured layout: curated highlights, and the full list below (including original).
+
+const MANIFEST_URL = "./images.json";
+const IMAGE_BASE = "./"; // images live in the project root
+
+// Configure which items to feature
+const ORIGINAL_IMAGE = "kobe.jpg"; // shown as first item in Highlights
+const HIGHLIGHTS = [
+  "kobe_LEGO.png",
+  "kobe_Simpson.png",
+  "kobe_Steampunk.png",
+  "kobe_Caricature.png",
+  "kobe_GTA.png",
+  "kobe_Rubber_Hose.png",
+  "kobe_Peanuts.png",
+  "kobe_South_Park.png",
+  "kobe_SpongeBob.png",
+];
+
+// Fallback list if fetch fails (kept in sync with current repo)
 let imageFiles = [
   "kobe.jpg",
   "kobe_3D_Animation.png",
@@ -62,73 +80,59 @@ function filenameToTitle(filename) {
   return cleaned.length ? cleaned : "Kobe";
 }
 
-function createCard(filename) {
+function createCard(filename, onClick, options = {}) {
   const title = filenameToTitle(filename);
   const li = document.createElement("li");
   li.className = "card";
-
   const figure = document.createElement("figure");
-
-  // Thumbnail wrapper to allow overlay badges
-  const thumb = document.createElement("div");
-  thumb.className = "thumb";
-
   const img = document.createElement("img");
-  img.src = filename;
+  img.src = IMAGE_BASE + filename;
   img.loading = "lazy";
   img.alt = title;
   img.decoding = "async";
-  img.addEventListener("click", () => openLightbox(filename, title));
-  thumb.appendChild(img);
-
-  // Add a small tag for the original source image
-  if (filename.toLowerCase() === "kobe.jpg") {
-    const badge = document.createElement("span");
-    badge.className = "badge badge-original";
-    badge.textContent = "Original";
-    badge.title = "Original source image";
-    thumb.appendChild(badge);
-  }
-
+  img.addEventListener("click", () => onClick?.(filename, title));
   const caption = document.createElement("figcaption");
   caption.textContent = title;
-
-  figure.appendChild(thumb);
+  figure.appendChild(img);
   figure.appendChild(caption);
   li.appendChild(figure);
+
+  if (options.isOriginal) {
+    const badge = document.createElement("span");
+    badge.className = "badge";
+    badge.textContent = "Original";
+    li.appendChild(badge);
+  }
   return li;
 }
 
-function renderGallery(filterText = "") {
-  const gallery = document.getElementById("gallery");
-  gallery.innerHTML = "";
+// hero removed
 
+function renderHighlights(files, filterText = "") {
+  const ul = document.getElementById("highlights");
+  ul.innerHTML = "";
   const normalized = filterText.trim().toLowerCase();
-  const files = normalized
-    ? imageFiles.filter((f) => filenameToTitle(f).toLowerCase().includes(normalized))
-    : imageFiles;
-
+  const list = normalized
+    ? files.filter((f) => filenameToTitle(f).toLowerCase().includes(normalized))
+    : files;
   const fragment = document.createDocumentFragment();
-  for (const file of files) fragment.appendChild(createCard(file));
-  gallery.appendChild(fragment);
+  for (const f of list) {
+    const isOriginal = f === ORIGINAL_IMAGE;
+    fragment.appendChild(createCard(f, openLightbox, { isOriginal }));
+  }
+  ul.appendChild(fragment);
 }
 
-// Try to load a manifest of images if served over HTTP. If it fails (e.g., file://),
-// we keep using the fallback list above.
-async function tryLoadManifestAndRender() {
-  // Initial render with fallback so the page feels instant
-  renderGallery();
-  try {
-    const res = await fetch("images.json", { cache: "no-store" });
-    if (!res.ok) throw new Error("Failed to fetch images.json");
-    const files = await res.json();
-    if (Array.isArray(files) && files.length) {
-      imageFiles = files;
-      renderGallery((document.getElementById("searchInput").value || ""));
-    }
-  } catch (err) {
-    // Silently ignore; fallback list is already rendered.
-  }
+function renderRest(files, filterText = "") {
+  const ul = document.getElementById("rest");
+  ul.innerHTML = "";
+  const normalized = filterText.trim().toLowerCase();
+  const list = normalized
+    ? files.filter((f) => filenameToTitle(f).toLowerCase().includes(normalized))
+    : files;
+  const fragment = document.createDocumentFragment();
+  for (const f of list) fragment.appendChild(createCard(f, openLightbox));
+  ul.appendChild(fragment);
 }
 
 // Lightbox logic
@@ -138,32 +142,52 @@ const lightboxCaption = document.getElementById("lightboxCaption");
 const lightboxClose = document.getElementById("lightboxClose");
 
 function openLightbox(src, caption) {
-  lightboxImg.src = src;
+  lightboxImg.src = IMAGE_BASE + src;
   lightboxImg.alt = caption;
   lightboxCaption.textContent = caption;
   lightbox.classList.add("open");
   lightbox.setAttribute("aria-hidden", "false");
 }
-
 function closeLightbox() {
   lightbox.classList.remove("open");
   lightbox.setAttribute("aria-hidden", "true");
-  // Defer clearing src to allow transition (if any)
   setTimeout(() => (lightboxImg.src = ""), 150);
 }
-
-lightbox.addEventListener("click", (e) => {
-  if (e.target === lightbox) closeLightbox();
-});
+lightbox.addEventListener("click", (e) => { if (e.target === lightbox) closeLightbox(); });
 lightboxClose.addEventListener("click", closeLightbox);
-document.addEventListener("keydown", (e) => {
-  if (e.key === "Escape" && lightbox.classList.contains("open")) closeLightbox();
-});
+document.addEventListener("keydown", (e) => { if (e.key === "Escape" && lightbox.classList.contains("open")) closeLightbox(); });
 
-// Search
-const searchInput = document.getElementById("searchInput");
-searchInput.addEventListener("input", (e) => renderGallery(e.target.value));
+async function init() {
+  try {
+    const res = await fetch(MANIFEST_URL, { cache: "no-store" });
+    if (res.ok) {
+      const files = await res.json();
+      if (Array.isArray(files) && files.length) imageFiles = files;
+    }
+  } catch {}
 
-// Initial render + manifest load
-tryLoadManifestAndRender();
+  // Build sets
+  const set = new Set(imageFiles);
+  let availableHighlights = HIGHLIGHTS.filter((h) => set.has(h));
+  // Prepend original to highlights if present, ensuring no duplicates
+  if (set.has(ORIGINAL_IMAGE)) {
+    availableHighlights = [ORIGINAL_IMAGE, ...availableHighlights.filter((f) => f !== ORIGINAL_IMAGE)];
+  }
+  // Exclude highlights (including original) from the rest
+  const rest = imageFiles.filter((f) => !availableHighlights.includes(f));
+
+  // Render sections
+  renderHighlights(availableHighlights, "");
+  renderRest(rest, "");
+
+  // Wire up search to filter both highlights and rest
+  const searchInput = document.getElementById("searchInput");
+  searchInput.addEventListener("input", (e) => {
+    const q = e.target.value;
+    renderHighlights(availableHighlights, q);
+    renderRest(rest, q);
+  });
+}
+
+init();
 

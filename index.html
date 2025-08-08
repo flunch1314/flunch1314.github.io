@@ -3,25 +3,32 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Kobe Style Gallery</title>
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="stylesheet" href="styles.css" />
+    <title>Kobe Avatar Gallery</title>
+    <link rel="stylesheet" href="./styles.css" />
   </head>
   <body>
     <header class="site-header">
-      <h1>Kobe Style Gallery</h1>
-      <p class="subtitle">A collection of Kobe images across different styles</p>
+      <h1>Kobe Avatar Gallery</h1>
+      <p class="subtitle">Curated highlights and all styles below</p>
       <div class="controls">
-        <input id="searchInput" type="search" placeholder="Search styles… (e.g., Pixar, LEGO, Realistic)" aria-label="Search styles" />
+        <input id="searchInput" type="search" placeholder="Search styles… (affects Highlights and All Styles)" aria-label="Search styles" />
       </div>
     </header>
 
-    <main>
-      <ul id="gallery" class="gallery" aria-live="polite"></ul>
+    <main class="layout">
+      <section class="section">
+        <h2 class="section-title">Highlights</h2>
+        <ul id="highlights" class="gallery"></ul>
+      </section>
+
+      <section class="section">
+        <h2 class="section-title">All Styles</h2>
+        <ul id="rest" class="gallery" aria-live="polite"></ul>
+      </section>
     </main>
 
     <footer class="site-footer">
-      <small>Built locally from images in this folder.</small>
+      <small>Images loaded from the project root via manifest.</small>
     </footer>
 
     <!-- Lightbox -->
@@ -31,7 +38,7 @@
       <div id="lightboxCaption" class="lightbox-caption"></div>
     </div>
 
-    <script src="script.js"></script>
+    <script src="./script.js"></script>
   </body>
   </html>
 
