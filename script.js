@@ -300,3 +300,19 @@ document.querySelectorAll('.btn').forEach(button => {
 });
 
 console.log('Premium Auto Sales website loaded successfully!');
+
+// Adjust back-to-top position if ClustrMaps badge is present (avoid overlap)
+(function adjustBackToTopPosition() {
+    function updatePosition() {
+        const badge = document.querySelector('.clustrmaps-badge');
+        if (!badge) return;
+        const rect = badge.getBoundingClientRect();
+        const desiredBottomPx = 16 + (rect.height || 120) + 12; // badge bottom margin + height + gap
+        backToTopBtn.style.bottom = desiredBottomPx + 'px';
+    }
+    window.addEventListener('load', () => {
+        updatePosition();
+        setTimeout(updatePosition, 1500);
+    });
+    window.addEventListener('resize', updatePosition);
+})();
