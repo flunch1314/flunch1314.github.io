@@ -552,6 +552,41 @@ body {
     color: #cbd5e1;
 }
 
+/* ClustrMaps corner badge */
+.clustrmaps-badge {
+    position: fixed;
+    left: 16px;
+    bottom: 16px;
+    width: 160px;
+    height: 120px;
+    z-index: 1100;
+    background: rgba(30, 41, 59, 0.4);
+    backdrop-filter: blur(2px);
+    border-radius: 8px;
+    padding: 4px;
+    overflow: hidden;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+}
+
+.clustrmaps-badge a,
+.clustrmaps-badge img,
+.clustrmaps-badge iframe,
+.clustrmaps-badge div {
+    width: 100% !important;
+    height: 100% !important;
+    display: block !important;
+}
+
+@media (max-width: 480px) {
+    .clustrmaps-badge {
+        width: 120px;
+        height: 90px;
+        left: 12px;
+        bottom: 12px;
+        padding: 3px;
+    }
+}
+
 /* Responsive Design */
 @media (max-width: 768px) {
     .hamburger {
