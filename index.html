@@ -1,26 +1,37 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Welcome</title>
-    <link rel="stylesheet" href="styles.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-</head>
-<body>
-    <div class="container" style="min-height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; gap: 2rem; padding-top: 80px; padding-bottom: 80px;">
-        <div style="text-align: center;">
-            <h1 style="margin-bottom: 0.5rem;">Welcome</h1>
-            <p style="color:#64748b;">Visit the full site here:</p>
-            <a class="btn btn-primary" href="old-index.html">Go to Full Site</a>
-        </div>
-        <div style="text-align: center;">
-            <h2 style="margin-bottom: 1rem;">Visitors</h2>
-            <div class="clustrmaps-embed" style="margin: 0 auto;">
-                <script type="text/javascript" id="clustrmaps" src="//clustrmaps.com/map_v2.js?d=uQqtoMk26sZLXVFVfA7XaGAvUWYxbpo00uht_uZXfj8&cl=ffffff&w=a"></script>
-            </div>
-        </div>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Kobe Style Gallery</title>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header class="site-header">
+      <h1>Kobe Style Gallery</h1>
+      <p class="subtitle">A collection of Kobe images across different styles</p>
+      <div class="controls">
+        <input id="searchInput" type="search" placeholder="Search styles… (e.g., Pixar, LEGO, Realistic)" aria-label="Search styles" />
+      </div>
+    </header>
+
+    <main>
+      <ul id="gallery" class="gallery" aria-live="polite"></ul>
+    </main>
+
+    <footer class="site-footer">
+      <small>Built locally from images in this folder.</small>
+    </footer>
+
+    <!-- Lightbox -->
+    <div id="lightbox" class="lightbox" aria-hidden="true" role="dialog" aria-label="Image viewer">
+      <button id="lightboxClose" class="lightbox-close" aria-label="Close viewer">×</button>
+      <img id="lightboxImage" alt="" />
+      <div id="lightboxCaption" class="lightbox-caption"></div>
     </div>
-</body>
-</html>
+
+    <script src="script.js"></script>
+  </body>
+  </html>
+

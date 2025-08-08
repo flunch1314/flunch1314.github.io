@@ -1,318 +1,169 @@
-// Mobile Navigation Toggle
-const hamburger = document.querySelector('.hamburger');
-const navMenu = document.querySelector('.nav-menu');
+// List of image files to include in the gallery (fallback if manifest fetch fails).
+// Using only files that start with "kobe" (plus the base kobe.jpg).
+let imageFiles = [
+  "kobe.jpg",
+  "kobe_3D_Animation.png",
+  "kobe_3D_Voxel_Art.png",
+  "kobe_3D_cartoon_CGI.png",
+  "kobe_Adventure_Time.png",
+  "kobe_Archer.png",
+  "kobe_Archie.png",
+  "kobe_Calvin_and_Hobbes.png",
+  "kobe_Caricature.png",
+  "kobe_Cel_Shaded.png",
+  "kobe_Chibi.png",
+  "kobe_Claymation.png",
+  "kobe_Disney_1990s.png",
+  "kobe_Doraemon.png",
+  "kobe_DreamWorks_Animation.png",
+  "kobe_Family_Guy.png",
+  "kobe_Fantasy_Cartoon.png",
+  "kobe_Flat.png",
+  "kobe_Fortnite.png",
+  "kobe_GTA.png",
+  "kobe_Ghibli.png",
+  "kobe_Impressionist.png",
+  "kobe_LEGO.png",
+  "kobe_Ligne_Claire.png",
+  "kobe_Looney_Tunes.png",
+  "kobe_Low_Poly.png",
+  "kobe_Marvel.png",
+  "kobe_Minecraft.png",
+  "kobe_Modern_Anime.png",
+  "kobe_Modern_Cartoon_Network.png",
+  "kobe_Muppets.png",
+  "kobe_Nickelodeon.png",
+  "kobe_Peanuts.png",
+  "kobe_Pixar_Animation_Studios.png",
+  "kobe_Realistic.png",
+  "kobe_Ren_and_Stimpy.png",
+  "kobe_Rick_and_Morty.png",
+  "kobe_Roblox.png",
+  "kobe_Rubber_Hose.png",
+  "kobe_Rugrats.png",
+  "kobe_Scooby_Doo.png",
+  "kobe_Simpson.png",
+  "kobe_Snoopy.png",
+  "kobe_Soft_Plush_Toy.png",
+  "kobe_South_Park.png",
+  "kobe_SpongeBob.png",
+  "kobe_Steampunk.png",
+  "kobe_Steven_Universe.png",
+  "kobe_Stop_Motion.png",
+  "kobe_Teen_Titans.png",
+  "kobe_UPA.png",
+  "kobe_Vector_Art.png",
+];
 
-hamburger.addEventListener('click', () => {
-    hamburger.classList.toggle('active');
-    navMenu.classList.toggle('active');
-});
-
-// Close mobile menu when clicking on a link
-document.querySelectorAll('.nav-menu a').forEach(link => {
-    link.addEventListener('click', () => {
-        hamburger.classList.remove('active');
-        navMenu.classList.remove('active');
-    });
-});
-
-// Smooth scrolling for navigation links
-document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-    anchor.addEventListener('click', function (e) {
-        e.preventDefault();
-        const target = document.querySelector(this.getAttribute('href'));
-        if (target) {
-            target.scrollIntoView({
-                behavior: 'smooth',
-                block: 'start'
-            });
-        }
-    });
-});
-
-// Navbar background change on scroll
-window.addEventListener('scroll', () => {
-    const navbar = document.querySelector('.navbar');
-    if (window.scrollY > 100) {
-        navbar.style.background = 'rgba(255, 255, 255, 0.98)';
-        navbar.style.boxShadow = '0 2px 20px rgba(0, 0, 0, 0.1)';
-    } else {
-        navbar.style.background = 'rgba(255, 255, 255, 0.95)';
-        navbar.style.boxShadow = 'none';
-    }
-});
-
-// Intersection Observer for animations
-const observerOptions = {
-    threshold: 0.1,
-    rootMargin: '0px 0px -50px 0px'
-};
-
-const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-        if (entry.isIntersecting) {
-            entry.target.classList.add('fade-in-up');
-        }
-    });
-}, observerOptions);
-
-// Observe elements for animation
-document.addEventListener('DOMContentLoaded', () => {
-    const animateElements = document.querySelectorAll('.feature-card, .car-card, .service-card, .contact-item');
-    animateElements.forEach(el => {
-        observer.observe(el);
-    });
-});
-
-// Form submission handling
-const contactForm = document.querySelector('.contact-form');
-if (contactForm) {
-    contactForm.addEventListener('submit', function(e) {
-        e.preventDefault();
-        
-        // Get form data
-        const formData = new FormData(this);
-        const name = this.querySelector('input[type="text"]').value;
-        const email = this.querySelector('input[type="email"]').value;
-        const phone = this.querySelector('input[type="tel"]').value;
-        const message = this.querySelector('textarea').value;
-        
-        // Simple validation
-        if (!name || !email || !message) {
-            alert('Please fill in all required fields.');
-            return;
-        }
-        
-        // Simulate form submission
-        const submitBtn = this.querySelector('button[type="submit"]');
-        const originalText = submitBtn.textContent;
-        submitBtn.textContent = 'Sending...';
-        submitBtn.disabled = true;
-        
-        setTimeout(() => {
-            alert('Thank you for your message! We will get back to you soon.');
-            this.reset();
-            submitBtn.textContent = originalText;
-            submitBtn.disabled = false;
-        }, 2000);
-    });
+function filenameToTitle(filename) {
+  const withoutExt = filename.replace(/\.[^/.]+$/, "");
+  const withoutPrefix = withoutExt.replace(/^kobe_?/i, "");
+  const cleaned = withoutPrefix.replace(/_/g, " ");
+  return cleaned.length ? cleaned : "Kobe";
 }
 
-// Car card hover effects
-document.querySelectorAll('.car-card').forEach(card => {
-    card.addEventListener('mouseenter', function() {
-        this.style.transform = 'translateY(-10px)';
-        this.style.boxShadow = '0 20px 40px rgba(0, 0, 0, 0.15)';
-    });
-    
-    card.addEventListener('mouseleave', function() {
-        this.style.transform = 'translateY(0)';
-        this.style.boxShadow = '0 10px 30px rgba(0, 0, 0, 0.1)';
-    });
-});
+function createCard(filename) {
+  const title = filenameToTitle(filename);
+  const li = document.createElement("li");
+  li.className = "card";
 
-// View Details button functionality
-document.querySelectorAll('.car-card .btn-primary').forEach(button => {
-    button.addEventListener('click', function(e) {
-        e.preventDefault();
-        const carName = this.closest('.car-card').querySelector('h3').textContent;
-        alert(`Detailed information for ${carName} will be displayed here. This could link to a detailed car page.`);
-    });
-});
+  const figure = document.createElement("figure");
 
-// Counter animation for stats
-function animateCounter(element, target, duration = 2000) {
-    let start = 0;
-    const increment = target / (duration / 16);
-    
-    const timer = setInterval(() => {
-        start += increment;
-        if (start >= target) {
-            element.textContent = target + '+';
-            clearInterval(timer);
-        } else {
-            element.textContent = Math.floor(start) + '+';
-        }
-    }, 16);
+  // Thumbnail wrapper to allow overlay badges
+  const thumb = document.createElement("div");
+  thumb.className = "thumb";
+
+  const img = document.createElement("img");
+  img.src = filename;
+  img.loading = "lazy";
+  img.alt = title;
+  img.decoding = "async";
+  img.addEventListener("click", () => openLightbox(filename, title));
+  thumb.appendChild(img);
+
+  // Add a small tag for the original source image
+  if (filename.toLowerCase() === "kobe.jpg") {
+    const badge = document.createElement("span");
+    badge.className = "badge badge-original";
+    badge.textContent = "Original";
+    badge.title = "Original source image";
+    thumb.appendChild(badge);
+  }
+
+  const caption = document.createElement("figcaption");
+  caption.textContent = title;
+
+  figure.appendChild(thumb);
+  figure.appendChild(caption);
+  li.appendChild(figure);
+  return li;
 }
 
-// Animate stats when they come into view
-const statsObserver = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-        if (entry.isIntersecting) {
-            const statNumbers = entry.target.querySelectorAll('.stat h3');
-            statNumbers.forEach(stat => {
-                const target = parseInt(stat.textContent);
-                animateCounter(stat, target);
-            });
-            statsObserver.unobserve(entry.target);
-        }
-    });
-}, { threshold: 0.5 });
+function renderGallery(filterText = "") {
+  const gallery = document.getElementById("gallery");
+  gallery.innerHTML = "";
 
-const aboutStats = document.querySelector('.about-stats');
-if (aboutStats) {
-    statsObserver.observe(aboutStats);
+  const normalized = filterText.trim().toLowerCase();
+  const files = normalized
+    ? imageFiles.filter((f) => filenameToTitle(f).toLowerCase().includes(normalized))
+    : imageFiles;
+
+  const fragment = document.createDocumentFragment();
+  for (const file of files) fragment.appendChild(createCard(file));
+  gallery.appendChild(fragment);
 }
 
-// Search functionality (placeholder)
-function searchInventory(query) {
-    console.log(`Searching for: ${query}`);
-    // This would typically make an API call to search inventory
-    alert(`Search results for "${query}" would be displayed here.`);
+// Try to load a manifest of images if served over HTTP. If it fails (e.g., file://),
+// we keep using the fallback list above.
+async function tryLoadManifestAndRender() {
+  // Initial render with fallback so the page feels instant
+  renderGallery();
+  try {
+    const res = await fetch("images.json", { cache: "no-store" });
+    if (!res.ok) throw new Error("Failed to fetch images.json");
+    const files = await res.json();
+    if (Array.isArray(files) && files.length) {
+      imageFiles = files;
+      renderGallery((document.getElementById("searchInput").value || ""));
+    }
+  } catch (err) {
+    // Silently ignore; fallback list is already rendered.
+  }
 }
 
-// Add search functionality to inventory section
-const searchInput = document.createElement('input');
-searchInput.type = 'text';
-searchInput.placeholder = 'Search inventory...';
-searchInput.className = 'search-input';
-searchInput.style.cssText = `
-    width: 100%;
-    max-width: 400px;
-    padding: 12px 16px;
-    border: 2px solid #e2e8f0;
-    border-radius: 8px;
-    font-size: 1rem;
-    margin-bottom: 2rem;
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
-`;
+// Lightbox logic
+const lightbox = document.getElementById("lightbox");
+const lightboxImg = document.getElementById("lightboxImage");
+const lightboxCaption = document.getElementById("lightboxCaption");
+const lightboxClose = document.getElementById("lightboxClose");
 
-searchInput.addEventListener('keypress', function(e) {
-    if (e.key === 'Enter') {
-        searchInventory(this.value);
-    }
-});
-
-const inventorySection = document.querySelector('.inventory .container');
-if (inventorySection) {
-    inventorySection.insertBefore(searchInput, inventorySection.querySelector('h2').nextSibling);
+function openLightbox(src, caption) {
+  lightboxImg.src = src;
+  lightboxImg.alt = caption;
+  lightboxCaption.textContent = caption;
+  lightbox.classList.add("open");
+  lightbox.setAttribute("aria-hidden", "false");
 }
 
-// Lazy loading for images
-const images = document.querySelectorAll('img');
-const imageObserver = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-        if (entry.isIntersecting) {
-            const img = entry.target;
-            img.src = img.src; // Trigger load
-            imageObserver.unobserve(img);
-        }
-    });
+function closeLightbox() {
+  lightbox.classList.remove("open");
+  lightbox.setAttribute("aria-hidden", "true");
+  // Defer clearing src to allow transition (if any)
+  setTimeout(() => (lightboxImg.src = ""), 150);
+}
+
+lightbox.addEventListener("click", (e) => {
+  if (e.target === lightbox) closeLightbox();
+});
+lightboxClose.addEventListener("click", closeLightbox);
+document.addEventListener("keydown", (e) => {
+  if (e.key === "Escape" && lightbox.classList.contains("open")) closeLightbox();
 });
 
-images.forEach(img => {
-    imageObserver.observe(img);
-});
+// Search
+const searchInput = document.getElementById("searchInput");
+searchInput.addEventListener("input", (e) => renderGallery(e.target.value));
 
-// Add loading animation to page elements
-window.addEventListener('load', () => {
-    document.body.classList.add('loaded');
-});
+// Initial render + manifest load
+tryLoadManifestAndRender();
 
-// Back to top button
-const backToTopBtn = document.createElement('button');
-backToTopBtn.innerHTML = '<i class="fas fa-arrow-up"></i>';
-backToTopBtn.className = 'back-to-top';
-backToTopBtn.style.cssText = `
-    position: fixed;
-    bottom: 30px;
-    right: 30px;
-    width: 50px;
-    height: 50px;
-    background: #2563eb;
-    color: white;
-    border: none;
-    border-radius: 50%;
-    cursor: pointer;
-    display: none;
-    align-items: center;
-    justify-content: center;
-    font-size: 1.2rem;
-    transition: all 0.3s ease;
-    z-index: 1000;
-    box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
-`;
-
-backToTopBtn.addEventListener('click', () => {
-    window.scrollTo({
-        top: 0,
-        behavior: 'smooth'
-    });
-});
-
-backToTopBtn.addEventListener('mouseenter', () => {
-    backToTopBtn.style.transform = 'translateY(-3px)';
-    backToTopBtn.style.boxShadow = '0 6px 20px rgba(37, 99, 235, 0.4)';
-});
-
-backToTopBtn.addEventListener('mouseleave', () => {
-    backToTopBtn.style.transform = 'translateY(0)';
-    backToTopBtn.style.boxShadow = '0 4px 12px rgba(37, 99, 235, 0.3)';
-});
-
-document.body.appendChild(backToTopBtn);
-
-// Show/hide back to top button
-window.addEventListener('scroll', () => {
-    if (window.scrollY > 500) {
-        backToTopBtn.style.display = 'flex';
-    } else {
-        backToTopBtn.style.display = 'none';
-    }
-});
-
-// Add CSS for search input
-const style = document.createElement('style');
-style.textContent = `
-    .search-input:focus {
-        outline: none;
-        border-color: #2563eb;
-        box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
-    }
-    
-    .back-to-top:hover {
-        background: #1d4ed8;
-    }
-`;
-document.head.appendChild(style);
-
-// Initialize tooltips for car details
-document.querySelectorAll('.car-details span').forEach(detail => {
-    detail.title = detail.textContent;
-});
-
-// Add loading states to buttons
-document.querySelectorAll('.btn').forEach(button => {
-    button.addEventListener('click', function(e) {
-        if (this.classList.contains('btn-primary') && !this.disabled) {
-            const originalText = this.textContent;
-            this.textContent = 'Loading...';
-            this.disabled = true;
-            
-            setTimeout(() => {
-                this.textContent = originalText;
-                this.disabled = false;
-            }, 1000);
-        }
-    });
-});
-
-console.log('Premium Auto Sales website loaded successfully!');
-
-// Adjust back-to-top position if ClustrMaps badge is present (avoid overlap)
-(function adjustBackToTopPosition() {
-    function updatePosition() {
-        const badge = document.querySelector('.clustrmaps-badge');
-        if (!badge) return;
-        const rect = badge.getBoundingClientRect();
-        const desiredBottomPx = 16 + (rect.height || 120) + 12; // badge bottom margin + height + gap
-        backToTopBtn.style.bottom = desiredBottomPx + 'px';
-    }
-    window.addEventListener('load', () => {
-        updatePosition();
-        setTimeout(updatePosition, 1500);
-    });
-    window.addEventListener('resize', updatePosition);
-})();
