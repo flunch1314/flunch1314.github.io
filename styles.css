@@ -553,36 +553,21 @@ body {
 }
 
 /* ClustrMaps corner badge */
-.clustrmaps-badge {
-    position: fixed;
-    right: 16px;
-    bottom: 16px;
-    width: 150px; /* scales widget by width */
-    height: auto;
-    z-index: 1100;
-    background: rgba(30, 41, 59, 0.3);
-    backdrop-filter: blur(2px);
-    border-radius: 8px;
-    padding: 4px;
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+/* ClustrMaps embedded in footer column (non-floating) */
+.clustrmaps-embed {
+    width: 100%;
+    max-width: 320px;
+    margin-left: auto;
+    margin-right: 0;
 }
 
-.clustrmaps-badge a,
-.clustrmaps-badge img,
-.clustrmaps-badge iframe,
-.clustrmaps-badge div {
+.clustrmaps-embed a,
+.clustrmaps-embed img,
+.clustrmaps-embed iframe,
+.clustrmaps-embed div {
     width: 100% !important;
     height: auto !important;
     display: block !important;
-}
-
-@media (max-width: 480px) {
-    .clustrmaps-badge {
-        width: 130px;
-        right: 12px;
-        bottom: 12px;
-        padding: 3px;
-    }
 }
 
 /* Responsive Design */
