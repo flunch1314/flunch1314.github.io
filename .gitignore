@@ -1,6 +1,8 @@
 # Local development servers and environments
 server.py
 server_*.py
+*.pyc
+*.py
 
 # Python caches and virtual envs
 __pycache__/

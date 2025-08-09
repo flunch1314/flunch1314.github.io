@@ -13,16 +13,48 @@
     </header>
 
     <main class="layout">
-      <section class="section">
-        <h2 class="section-title">AI Lab Message</h2>
-        <form id="labForm" class="lab-form" autocomplete="off">
-          <label for="labMessage" class="visually-hidden">Your message</label>
-          <textarea id="labMessage" rows="3" placeholder="Type your message..." aria-label="Your message"></textarea>
-          <div class="lab-actions">
-            <button type="submit" id="labSend">Send</button>
-            <span id="labStatus" role="status" aria-live="polite"></span>
-          </div>
-        </form>
+      <section class="section lab-grid">
+        <div class="lab-left">
+          <h2 class="section-title">AI Lab Message</h2>
+          <form id="labForm" class="lab-form" autocomplete="off">
+            <label for="labName" class="visually-hidden">Your name</label>
+            <input id="labName" type="text" placeholder="Your name" aria-label="Your name" />
+
+            <label for="labEmail" class="visually-hidden">Your email</label>
+            <input id="labEmail" type="email" placeholder="Your email" aria-label="Your email" />
+
+            <label for="labStyle" class="visually-hidden">Style</label>
+            <select id="labStyle" aria-label="Preferred style">
+              <option value="" selected>Choose a style (optional)</option>
+              <option>LEGO</option>
+              <option>Simpson</option>
+              <option>Steampunk</option>
+              <option>Caricature</option>
+              <option>GTA</option>
+              <option>Peanuts</option>
+              <option>SpongeBob</option>
+              <option>Ghibli</option>
+              <option>Realistic</option>
+              <option>Other</option>
+            </select>
+
+            <label for="labMessage" class="visually-hidden">Your message</label>
+            <textarea id="labMessage" rows="4" placeholder="Type your message..." aria-label="Your message"></textarea>
+
+            <div class="lab-actions">
+              <button type="submit" id="labSend">Send</button>
+              <span id="labStatus" role="status" aria-live="polite"></span>
+            </div>
+          </form>
+        </div>
+        <div class="lab-right">
+          <h2 class="section-title">Preview</h2>
+          <figure class="lab-preview">
+            <div id="labPreviewPlaceholder" class="lab-preview-placeholder" aria-hidden="false">Image preview will appear here</div>
+            <img id="labPreview" alt="Selected style preview" hidden />
+            <figcaption id="labPreviewCaption"></figcaption>
+          </figure>
+        </div>
       </section>
     </main>
 
