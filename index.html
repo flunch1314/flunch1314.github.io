@@ -3,45 +3,32 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Kobe Avatar Gallery</title>
+    <title>Home</title>
     <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
     <header class="site-header">
-      <h1>Kobe Avatar Gallery</h1>
-      <p class="subtitle">Curated highlights and all styles below</p>
-      <div class="controls">
-        <input id="searchInput" type="search" placeholder="Search styles… (affects Highlights and All Styles)" aria-label="Search styles" />
-      </div>
-      <a
-        class="tip-button"
-        href="https://ko-fi.com/freelunch"
-        target="_blank"
-        rel="noopener noreferrer"
-        aria-label="Support me on Ko-fi (tips appreciated)"
-      >☕ Buy me a coffee</a>
+      <h1>Welcome</h1>
+      <p class="subtitle">Just some random thoughts and creations.</p>
+      <a class="tip-button" href="https://ko-fi.com/freelunch" target="_blank" rel="noopener noreferrer" aria-label="Support me on Ko-fi (tips appreciated)">☕ Buy me a coffee</a>
     </header>
 
     <main class="layout">
       <section class="section">
-        <h2 class="section-title">Highlights</h2>
-        <ul id="highlights" class="gallery"></ul>
-      </section>
-
-      <section class="section">
-        <h2 class="section-title">All Styles</h2>
-        <ul id="rest" class="gallery" aria-live="polite"></ul>
+        <h2 class="section-title">Explore</h2>
+        <ul class="nav-cards" id="navCards">
+          <li>
+            <a class="nav-card" href="gallery.html">
+              <img class="nav-card-thumb" src="kobe_Peanuts.png" alt="Gallery preview" />
+              <div class="nav-card-title">Kobe Avatar Gallery</div>
+              <div class="nav-card-desc">Browse all Kobe avatar styles.</div>
+            </a>
+          </li>
+          <!-- Future cards can be appended here or via JS -->
+        </ul>
       </section>
     </main>
 
-    <!-- Lightbox -->
-    <div id="lightbox" class="lightbox" aria-hidden="true" role="dialog" aria-label="Image viewer">
-      <button id="lightboxClose" class="lightbox-close" aria-label="Close viewer">×</button>
-      <img id="lightboxImage" alt="" />
-      <div id="lightboxCaption" class="lightbox-caption"></div>
-    </div>
-
-    <script src="script.js"></script>
   </body>
   </html>
 
