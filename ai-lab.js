@@ -88,10 +88,6 @@ async function sendLabMessage(payload) {
       const result = await sendLabMessage({ name, email, style, message: msg });
       setStatus("Sent! Thank you.", "success");
       updatePreviewFromServer(result);
-      textarea.value = "";
-      if (nameInput) nameInput.value = "";
-      if (emailInput) emailInput.value = "";
-      if (styleSelect) styleSelect.selectedIndex = 0;
     } catch (err) {
       console.error(err);
       setStatus("Failed to send. Configure LAB_WEBHOOK_URL in ai-lab.js or try again.", "error");
