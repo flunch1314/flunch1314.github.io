@@ -1,7 +1,7 @@
 // Featured layout: curated highlights, and the full list below (including original).
 
 const MANIFEST_URL = "https://raw.githubusercontent.com/flunch1314/flunch1314.github.io/main/images.json";
-const IMAGE_BASE = "https://raw.githubusercontent.com/flunch1314/flunch1314.github.io/main/"; // images live in the project root
+const IMAGE_BASE = "https://raw.githubusercontent.com/flunch1314/flunch1314.github.io/main/Kobe_Avatar_Gallery/"; // images live in the project root
 
 // Configure which items to feature
 const ORIGINAL_IMAGE = "kobe.jpg"; // shown as first item in Highlights
