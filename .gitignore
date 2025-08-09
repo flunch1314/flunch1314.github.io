@@ -1,0 +1,13 @@
+# Local development servers and environments
+server.py
+server_*.py
+
+# Python caches and virtual envs
+__pycache__/
+.venv/
+venv/
+*.pyc
+
+# Environment files
+.env
+.env.*
