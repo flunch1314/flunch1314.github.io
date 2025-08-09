@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>AI Lab</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header class="site-header">
+      <h1>AI Lab</h1>
+      <p class="subtitle">Leave a message</p>
+    </header>
+
+    <main class="layout">
+      <section class="section">
+        <h2 class="section-title">AI Lab Message</h2>
+        <form id="labForm" class="lab-form" autocomplete="off">
+          <label for="labMessage" class="visually-hidden">Your message</label>
+          <textarea id="labMessage" rows="3" placeholder="Type your message..." aria-label="Your message"></textarea>
+          <div class="lab-actions">
+            <button type="submit" id="labSend">Send</button>
+            <span id="labStatus" role="status" aria-live="polite"></span>
+          </div>
+        </form>
+      </section>
+    </main>
+
+    <script src="ai-lab.js"></script>
+  </body>
+  </html>
+
