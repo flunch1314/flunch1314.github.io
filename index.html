@@ -10,8 +10,13 @@
     <header class="site-header">
       <h1>Welcome</h1>
       <p class="subtitle">Just some random thoughts and creations.</p>
-      <a class="tip-button" href="https://ko-fi.com/freelunch" target="_blank" rel="noopener noreferrer" aria-label="Support me on Ko-fi (tips appreciated)">☕ Buy me a coffee</a>
     </header>
+    
+    <!-- Ko-fi widget positioned in top right corner -->
+    <div id="kofi-widget-container" class="kofi-widget-container">
+      <script type='text/javascript' src='https://storage.ko-fi.com/cdn/widget/Widget_2.js'></script>
+      <script type='text/javascript'>kofiwidget2.init('Buy Me a Coffee', '#72a4f2', 'H2H01JE3T8');kofiwidget2.draw();</script>
+    </div>
 
     <main class="layout">
       <section class="section">
@@ -29,6 +34,13 @@
               <img class="nav-card-thumb" src="KobeAvatarGallery/kobe_3D_cartoon_CGI.png" alt="AI Lab preview" />
               <div class="nav-card-title">AI Lab</div>
               <div class="nav-card-desc">Experiments, demos, and galleries.</div>
+            </a>
+          </li>
+          <li>
+              <a class="nav-card" href="PixarStyle/cartoon-transformation.html">
+              <img class="nav-card-thumb" src="PixarStyle/kids_gen.png" alt="Animated Transformations preview" />
+              <div class="nav-card-title">Pixarization</div>
+              <div class="nav-card-desc">Transform your photos into Pixar-style masterpieces.</div>
             </a>
           </li>
           <!-- Future cards can be appended here or via JS -->
