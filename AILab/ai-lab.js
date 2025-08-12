@@ -1,7 +1,7 @@
 // Configure this to your endpoint (local Flask server by default)
 // If testing locally, ensure server.py is running.
 // If deploying, replace with your public https URL (e.g., ngrok) + "/hook".
-const LAB_WEBHOOK_URL = "http://127.0.0.1:5000/hook";
+const LAB_WEBHOOK_URL = "http://flunch1314.github.io/AILab/ai-lab.html/hook";
 function updatePreviewFromServer(result) {
   const imgEl = document.getElementById("labPreview");
   const captionEl = document.getElementById("labPreviewCaption");
